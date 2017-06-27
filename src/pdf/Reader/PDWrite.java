@@ -15,7 +15,7 @@ public class PDWrite {
 	
 	//Builds
 	public PDWrite(String path) throws InvalidPasswordException, IOException{
-	//	leerPDF(path);
+		leerPDF(path);
 		System.out.println();
 	}
 	
@@ -35,7 +35,8 @@ public class PDWrite {
 	
 	
 	//Test Class PDFWrite
-	public static void main(String [] args){
+	public static void main(String [] args) throws InvalidPasswordException, IOException{
+		PDWrite pdf = new PDWrite("/home/pikchu360/Documents/TP1.pdf");
 		System.out.println("Hola");
 	}
 }
