@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="/home/pikchu360/Documents/WorkSpace Java/PDF-Viewer-S.L-/PDFBox Library/preflight-2.0.6.jar"/>
 	<classpathentry kind="lib" path="/home/pikchu360/Documents/WorkSpace Java/PDF-Viewer-S.L-/PDFBox Library/preflight-app-2.0.6.jar"/>
 	<classpathentry kind="lib" path="/home/pikchu360/Documents/WorkSpace Java/PDF-Viewer-S.L-/PDFBox Library/xmpbox-2.0.6.jar"/>
+	<classpathentry kind="lib" path="/home/pikchu360/Documents/WorkSpace Java/PDF-Viewer-S.L-/PDFBox Library/jPDFViewer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
