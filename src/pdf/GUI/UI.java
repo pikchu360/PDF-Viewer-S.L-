@@ -25,6 +25,10 @@ import javax.swing.JToolBar;
 import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import java.awt.FlowLayout;
 
 public class UI extends JFrame implements ActionListener {		//GUI the program PDFViewer
 	private static final long serialVersionUID = 1L;
@@ -38,6 +42,14 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 	private PagePanel panel;									//
 	private UI lectorPdf;										//
 	private PDFFile pdffile;									//
+	private JPanel panel_1;
+	private JToolBar tbDown;
+	private JLabel lblTextDown;
+	private JComboBox cbDown;
+	private JLabel lblDirectory;
+	private JLabel lblTextDirectory;
+	private JButton btnZoomOut;
+	private JButton btnZoomIn;
 
 
 	public UI() {
@@ -62,15 +74,55 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		
 		JToolBar tbHerramientas = new JToolBar();
 		getContentPane().add(tbHerramientas, BorderLayout.NORTH);
-		open = new JButton("Abrir");
+		
+		//Buttons
+		open = new JButton();
+		open.setIcon( getSizeImage( new ImageIcon("D:\\Documents\\Workspace JAVA\\PDF-Viewer-S.L-\\Images-Icons\\add.png"), 30, 30 ));
 		tbHerramientas.add(open);
-		backPage = new JButton("<");
-		backPage.setIcon(null);
+		
+		btnZoomOut = new JButton("");
+		btnZoomOut.setIcon( getSizeImage( new ImageIcon("D:\\Documents\\Workspace JAVA\\PDF-Viewer-S.L-\\Images-Icons\\001-zoom-out.png"), 30, 30 ) );
+		tbHerramientas.add(btnZoomOut);
+		
+		btnZoomIn = new JButton("");
+		btnZoomIn.setIcon(getSizeImage( new ImageIcon("D:\\Documents\\Workspace JAVA\\PDF-Viewer-S.L-\\Images-Icons\\002-zoom-in.png"), 30, 30 ));
+		tbHerramientas.add(btnZoomIn);
+		
+		backPage = new JButton("");
+		backPage.setIcon( getSizeImage( new ImageIcon("D:\\Documents\\Workspace JAVA\\PDF-Viewer-S.L-\\Images-Icons\\previous.png"), 30, 30 ) );
 		backPage.setVisible(false);
+		backPage.setFocusable(false);
 		getContentPane().add(backPage, BorderLayout.WEST);
-		nextPage = new JButton(">");
+		
+		nextPage = new JButton("");
+		nextPage.setIcon( getSizeImage( new ImageIcon("D:\\Documents\\Workspace JAVA\\PDF-Viewer-S.L-\\Images-Icons\\next.png"), 30, 30 ));
 		nextPage.setVisible(false);
+		nextPage.setFocusable(false);
 		getContentPane().add(nextPage, BorderLayout.EAST);
+		
+		panel_1 = new JPanel();
+		getContentPane().add(panel_1, BorderLayout.SOUTH);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		tbDown = new JToolBar();
+		panel_1.add(tbDown);
+		
+		cbDown = new JComboBox();
+		cbDown.setSize(100,20);
+		cbDown.setMaximumSize(cbDown.getSize());
+		tbDown.add(cbDown);
+		
+		lblTextDown = new JLabel(":");
+		lblTextDown.setSize(500, 20);
+		lblTextDown.setMaximumSize(lblTextDown.getSize());
+		tbDown.add(lblTextDown);
+		
+		lblDirectory = new JLabel("Directory:  ");
+		tbDown.add(lblDirectory);
+		
+		lblTextDirectory = new JLabel("                                                                                                                                                                          ");
+		tbDown.add(lblTextDirectory);
+		
 		nextPage.addActionListener(this);
 		backPage.addActionListener(this);
 		
@@ -103,6 +155,8 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 						RandomAccessFile raf = new RandomAccessFile(file, "r");
 						FileChannel channel = raf.getChannel();
 
+						lblTextDirectory.setText(chooser.getSelectedFile().getAbsolutePath());
+						
 						ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0,channel.size());
 						pdffile = new PDFFile(buf);
 						paginas = pdffile.getNumPages();
@@ -118,6 +172,9 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 				
 			}
 		});
+		
+		
+		
 		setVisible(true);
 	}
 
@@ -155,5 +212,15 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		}
 		panel.repaint();
 		repaint();
+	}
+	
+	//edit size Image to button
+	public ImageIcon getSizeImage(ImageIcon icon, int w, int h){
+		//ImageIcon icon = new ImageIcon("miimagen.jpeg");
+		java.awt.Image img = icon.getImage(); //convertimos icon en una imagen
+		java.awt.Image otraimg = img.getScaledInstance(w,h,java.awt.Image.SCALE_SMOOTH); //creamos una imagen nueva dándole las dimensiones que queramos a la antigua
+		ImageIcon otroicon = new ImageIcon(otraimg);
+		//JButton botón = new JButton(otroicon);
+		return otroicon;
 	}
 }
