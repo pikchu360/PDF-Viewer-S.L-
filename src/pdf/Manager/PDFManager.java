@@ -26,7 +26,7 @@ public class PDFManager {
 	private PDDocumentInformation pdDocumentInformation;
 	
 	/* Constructor */
-	PDFManager(String ruta) throws IOException{
+	public PDFManager(String ruta) throws IOException{
 		this.file = new File(ruta);
 		this.pdfParser = null;
 		this.cosDocument = null;
@@ -94,7 +94,7 @@ public class PDFManager {
 	public String getTitle(){
 		String title = getPDDocumentInformation().getTitle();
 		if(title == null)
-			return "No title";
+			title = "No title";
 		return title;
 	}
 	
@@ -158,13 +158,18 @@ public class PDFManager {
 	}
 	
 	/* Metodo para cerrar el pdf */
-	public void closePDF() throws IOException{
-		getPDDocument().close();
+	public void closePDF(){
+		try {
+			getPDDocument().close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) throws IOException {
 		
-		PDFManager pdfManager = new PDFManager("D:/vs-copyright.pdf");
+		PDFManager pdfManager = new PDFManager("D://vs-copyright.pdf");
 		
 		System.out.println(pdfManager.openPDF());
 		System.out.println("Number of words: "+pdfManager.getNumberOfWords());

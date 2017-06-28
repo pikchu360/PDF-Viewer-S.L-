@@ -1,5 +1,6 @@
 package pdf.GUI;
 
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -21,6 +23,9 @@ import javax.swing.filechooser.FileFilter;
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
 import com.sun.pdfview.PagePanel;
+
+import pdf.Manager.PDFManager;
+
 import javax.swing.JToolBar;
 import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
@@ -77,25 +82,25 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		
 		//Buttons
 		open = new JButton();
-		open.setIcon( getSizeImage( new ImageIcon("D:\\Documents\\Workspace JAVA\\PDF-Viewer-S.L-\\Images-Icons\\add.png"), 30, 30 ));
+		open.setIcon( getSizeImage( new ImageIcon("Images-Icons\\add.png"), 30, 30 ));
 		tbHerramientas.add(open);
 		
 		btnZoomOut = new JButton("");
-		btnZoomOut.setIcon( getSizeImage( new ImageIcon("D:\\Documents\\Workspace JAVA\\PDF-Viewer-S.L-\\Images-Icons\\001-zoom-out.png"), 30, 30 ) );
+		btnZoomOut.setIcon( getSizeImage( new ImageIcon("Images-Icons\\001-zoom-out.png"), 30, 30 ) );
 		tbHerramientas.add(btnZoomOut);
 		
 		btnZoomIn = new JButton("");
-		btnZoomIn.setIcon(getSizeImage( new ImageIcon("D:\\Documents\\Workspace JAVA\\PDF-Viewer-S.L-\\Images-Icons\\002-zoom-in.png"), 30, 30 ));
+		btnZoomIn.setIcon(getSizeImage( new ImageIcon("Images-Icons\\002-zoom-in.png"), 30, 30 ));
 		tbHerramientas.add(btnZoomIn);
 		
 		backPage = new JButton("");
-		backPage.setIcon( getSizeImage( new ImageIcon("D:\\Documents\\Workspace JAVA\\PDF-Viewer-S.L-\\Images-Icons\\previous.png"), 30, 30 ) );
+		backPage.setIcon( getSizeImage( new ImageIcon("Images-Icons\\previous.png"), 30, 30 ) );
 		backPage.setVisible(false);
 		backPage.setFocusable(false);
 		getContentPane().add(backPage, BorderLayout.WEST);
 		
 		nextPage = new JButton("");
-		nextPage.setIcon( getSizeImage( new ImageIcon("D:\\Documents\\Workspace JAVA\\PDF-Viewer-S.L-\\Images-Icons\\next.png"), 30, 30 ));
+		nextPage.setIcon( getSizeImage( new ImageIcon("Images-Icons\\next.png"), 30, 30 ));
 		nextPage.setVisible(false);
 		nextPage.setFocusable(false);
 		getContentPane().add(nextPage, BorderLayout.EAST);
@@ -108,11 +113,19 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		panel_1.add(tbDown);
 		
 		cbDown = new JComboBox();
-		cbDown.setSize(100,20);
+		cbDown.setSize(150,20);
 		cbDown.setMaximumSize(cbDown.getSize());
+		cbDown.setVisible(false);
+		cbDown.addItem("Title");
+		cbDown.addItem("Author");
+		cbDown.addItem("Subject");
+		cbDown.addItem("Keywords");
+		cbDown.addItem("Number of words");
+		cbDown.addItem("Number of pages");
+		cbDown.addItem("Average words");
 		tbDown.add(cbDown);
 		
-		lblTextDown = new JLabel(":");
+		lblTextDown = new JLabel();
 		lblTextDown.setSize(500, 20);
 		lblTextDown.setMaximumSize(lblTextDown.getSize());
 		tbDown.add(lblTextDown);
@@ -163,8 +176,10 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 						pagina = 1;
 						viewPage();
 						raf.close();
+						cbDown.setVisible(true);
 						backPage.setVisible(true);
 						nextPage.setVisible(true);
+						
 					}catch (Exception e) {
 						e.printStackTrace();
 					}								
@@ -173,7 +188,59 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 			}
 		});
 		
-		
+		cbDown.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				String ruta = lblTextDirectory.getText();
+				try {
+					PDFManager pdfManager = new PDFManager(ruta);
+					String abrir = pdfManager.openPDF();
+					String seleccion = cbDown.getSelectedItem().toString();
+					if(seleccion == "Title"){
+						lblTextDown.setText("     "+pdfManager.getTitle());
+					}
+					else{
+						if(seleccion == "Author"){
+							lblTextDown.setText("     "+pdfManager.getAuthor());
+						}
+						else{
+							if(seleccion == "Subject"){
+								lblTextDown.setText("     "+pdfManager.getSubject());
+							}
+							else{
+								if(seleccion == "Keywords"){
+									lblTextDown.setText("     "+pdfManager.getKeywords());
+								}
+								else{
+									if(seleccion == "Number of words"){
+										lblTextDown.setText("     "+pdfManager.getNumberOfWords());
+									}
+									else{
+										if(seleccion == "Number of pages"){
+											lblTextDown.setText("     "+pdfManager.getNumberOfPages());
+										}
+										else{
+											lblTextDown.setText("     "+pdfManager.getAverageWords());
+										}
+									}
+								}
+							}
+						}
+					}
+					
+					pdfManager.closePDF();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				cbDown.getSelectedItem();
+			}
+		});
 		
 		setVisible(true);
 	}
