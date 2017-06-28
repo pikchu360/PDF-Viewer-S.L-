@@ -47,13 +47,13 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		// Dimesion del frame y panel
 		Dimension pantalla;
 		Dimension cuadro;
-		setSize(750, 780);		
+		setSize(750, 690);
 		pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		cuadro = this.getSize();
 		this.setLocation(((pantalla.width - cuadro.width) / 2),
-				(pantalla.height - cuadro.height) / 2);
+				(pantalla.height - cuadro.height) / 3);
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		panel.setBackground(Color.white);
+		panel.setBackground(Color.WHITE);
 		getContentPane().add(panel);
 		repaint();
 
@@ -66,8 +66,10 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		tbHerramientas.add(open);
 		backPage = new JButton("<");
 		backPage.setIcon(null);
+		backPage.setVisible(false);
 		getContentPane().add(backPage, BorderLayout.WEST);
 		nextPage = new JButton(">");
+		nextPage.setVisible(false);
 		getContentPane().add(nextPage, BorderLayout.EAST);
 		nextPage.addActionListener(this);
 		backPage.addActionListener(this);
@@ -107,6 +109,8 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 						pagina = 1;
 						viewPage();
 						raf.close();
+						backPage.setVisible(true);
+						nextPage.setVisible(true);
 					}catch (Exception e) {
 						e.printStackTrace();
 					}								
@@ -121,8 +125,8 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 
 		if (e.getSource() == nextPage) {
 			pagina += 1;
-			if (pagina > paginas || pagina < 1) {
-				pagina = 1;
+			if (pagina > paginas) {
+				pagina -= 1;
 			}
 			viewPage();
 		}
