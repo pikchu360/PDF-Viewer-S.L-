@@ -24,6 +24,7 @@ import com.sun.pdfview.PagePanel;
 import javax.swing.JToolBar;
 import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
+import javax.swing.ImageIcon;
 
 public class UI extends JFrame implements ActionListener {		//GUI the program PDFViewer
 	private static final long serialVersionUID = 1L;
@@ -64,6 +65,7 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		open = new JButton("Abrir");
 		tbHerramientas.add(open);
 		backPage = new JButton("<");
+		backPage.setIcon(null);
 		getContentPane().add(backPage, BorderLayout.WEST);
 		nextPage = new JButton(">");
 		getContentPane().add(nextPage, BorderLayout.EAST);
