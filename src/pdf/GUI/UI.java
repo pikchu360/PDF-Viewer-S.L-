@@ -131,6 +131,7 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		tbDown.add(lblTextDown);
 		
 		lblDirectory = new JLabel("Directory:  ");
+		lblDirectory.setVisible(false);
 		tbDown.add(lblDirectory);
 		
 		lblTextDirectory = new JLabel("                                                                                                                                                                          ");
@@ -176,6 +177,7 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 						pagina = 1;
 						viewPage();
 						raf.close();
+						lblDirectory.setVisible(true);
 						cbDown.setVisible(true);
 						backPage.setVisible(true);
 						nextPage.setVisible(true);
