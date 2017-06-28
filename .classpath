@@ -9,5 +9,8 @@
 	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/PDFBox Library/preflight-2.0.6.jar"/>
 	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/PDFBox Library/preflight-app-2.0.6.jar"/>
 	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/PDFBox Library/xmpbox-2.0.6.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/PDFBox Library/com-sun-pdfview-1.0.5-201003191900.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/PDFBox Library/PDFRenderer.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/PDFBox Library/pdf-renderer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
