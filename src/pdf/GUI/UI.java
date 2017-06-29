@@ -1,3 +1,6 @@
+//License Apache 2.0. Release LICENSE.txt 
+
+
 package pdf.GUI;
 
 
