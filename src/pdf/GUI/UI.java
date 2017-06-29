@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -22,10 +23,15 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 
+import org.apache.pdfbox.debugger.ui.ZoomMenu;
+
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
+import com.sun.pdfview.PDFViewer;
 import com.sun.pdfview.PagePanel;
+import com.sun.scenario.effect.ZoomRadialBlur;
 
+import javafx.beans.value.ChangeListener;
 import pdf.Manager.PDFManager;
 
 import javax.swing.JToolBar;
@@ -36,6 +42,8 @@ import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 public class UI extends JFrame implements ActionListener {		//GUI the program PDFViewer
 	private static final long serialVersionUID = 1L;
@@ -49,7 +57,7 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 	private PagePanel panel;									//
 	private UI lectorPdf;										//
 	private PDFFile pdffile;									//
-	private JPanel panel_1;
+	private JPanel panel_1;										
 	private JToolBar tbDown;
 	private JLabel lblTextDown;
 	private JComboBox cbDown;
@@ -57,15 +65,21 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 	private JLabel lblTextDirectory;
 	private JButton btnZoomOut;
 	private JButton btnZoomIn;
+	private JButton btnResetZoom;
 
-
+	private JScrollPane scLateral;
+	private JScrollPane scInferior;
+	
+	private Dimension dSizePanel;
+	
 	public UI() {
 		lectorPdf = this;
 		panel = new PagePanel();
-
+		
 		// Dimesion del frame y panel
 		Dimension pantalla;
 		Dimension cuadro;
+		
 		setSize(750, 690);
 		pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		cuadro = this.getSize();
@@ -73,6 +87,7 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 				(pantalla.height - cuadro.height) / 3);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		panel.setBackground(Color.WHITE);
+		
 		getContentPane().add(panel);
 		repaint();
 
@@ -97,6 +112,10 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		btnZoomIn.setIcon(getSizeImage( new ImageIcon("Images-Icons\\002-zoom-in.png"), 30, 30 ));
 		btnZoomIn.setFocusable(false);
 		tbHerramientas.add(btnZoomIn);
+		
+		btnResetZoom = new JButton("");
+		btnResetZoom.setIcon(getSizeImage( new ImageIcon("Images-Icons\\reset-zoom.png"), 30, 30) ); 
+		tbHerramientas.add(btnResetZoom);
 		
 		backPage = new JButton("");
 		backPage.setVisible(false);
@@ -143,10 +162,16 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		nextPage.addActionListener(this);
 		backPage.addActionListener(this);
 		
+		btnZoomOut.addActionListener(this);
+		btnZoomIn.addActionListener(this);
+		btnResetZoom.addActionListener(this);
+		
 		// Botones y area texto
 		open.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
+				
+				
 				final JFileChooser chooser = new JFileChooser();
 				chooser.setFileFilter(new FileFilter() {
 					
@@ -174,6 +199,7 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 						lblTextDirectory.setText(chooser.getSelectedFile().getAbsolutePath());		//add directory in label text
 						
 						ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0,channel.size());
+						buf.clear();
 						
 						pdffile = new PDFFile(buf);													//save file pdf in variable
 						paginas = pdffile.getNumPages();											//get number of pages the PDF file
@@ -181,6 +207,8 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 						viewPage();																	//show file in panel
 						
 						raf.close();
+						
+						dSizePanel = new Dimension(panel.getSize());								//save size original panel
 						
 						lblDirectory.setVisible(true);
 						cbDown.setVisible(true);
@@ -194,6 +222,9 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 				
 			}
 		});
+		
+		//this.scLateral = new JScrollPane();
+		//this.scLateral.setVisible(true);
 		
 		backPage.addMouseListener(new MouseAdapter() { 				//Add event to mouse.			
             public void mouseEntered(MouseEvent evt) {				//mouse entered in button			            	
@@ -271,7 +302,7 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 				cbDown.getSelectedItem();
 			}
 		});
-				
+		
 		setVisible(true);
 	}
 
@@ -292,6 +323,24 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 			}
 			viewPage();
 		}
+		
+		if(e.getSource()==btnZoomIn){
+			panel.useZoomTool(true);
+			Dimension  dimen = new Dimension(getSize());
+			dimen.setSize(panel.getSize().getWidth()*1.05, panel.getSize().getHeight()*1.05);
+			panel.setSize(dimen);
+		}
+		if(e.getSource()==btnZoomOut){
+			panel.useZoomTool(true);
+			Dimension  dimen = new Dimension(getSize());
+			dimen.setSize(panel.getSize().getWidth()*0.85, panel.getSize().getHeight()*0.85);
+			panel.setSize(dimen);
+		}
+		
+		if(e.getSource() == btnResetZoom ){
+			panel.setSize(this.dSizePanel);
+		}
+		
 	}
 	
 	private void viewPage(){
