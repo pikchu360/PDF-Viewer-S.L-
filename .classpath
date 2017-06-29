@@ -2,15 +2,15 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/Files/UNSa/14 - OPATATIVA II - DESARROLLO DE SOFTWARE LIBRE/Proyecto Final/com-sun-pdfview-1.0.5-201003191900.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UNSa/14 - OPATATIVA II - DESARROLLO DE SOFTWARE LIBRE/Proyecto Final/PDFRenderer.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UNSa/14 - OPATATIVA II - DESARROLLO DE SOFTWARE LIBRE/Proyecto Final/pdf-renderer.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UNSa/14 - OPATATIVA II - DESARROLLO DE SOFTWARE LIBRE/Proyecto Final/PDFBOX library/fontbox-2.0.6.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UNSa/14 - OPATATIVA II - DESARROLLO DE SOFTWARE LIBRE/Proyecto Final/PDFBOX library/pdfbox-2.0.6.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UNSa/14 - OPATATIVA II - DESARROLLO DE SOFTWARE LIBRE/Proyecto Final/PDFBOX library/pdfbox-app-2.0.6.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UNSa/14 - OPATATIVA II - DESARROLLO DE SOFTWARE LIBRE/Proyecto Final/PDFBOX library/pdfbox-tools-2.0.6.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UNSa/14 - OPATATIVA II - DESARROLLO DE SOFTWARE LIBRE/Proyecto Final/PDFBOX library/preflight-2.0.6.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UNSa/14 - OPATATIVA II - DESARROLLO DE SOFTWARE LIBRE/Proyecto Final/PDFBOX library/preflight-app-2.0.6.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UNSa/14 - OPATATIVA II - DESARROLLO DE SOFTWARE LIBRE/Proyecto Final/PDFBOX library/xmpbox-2.0.6.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/Libraries PDF/com-sun-pdfview-1.0.5-201003191900.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/Libraries PDF/fontbox-2.0.6.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/Libraries PDF/pdfbox-2.0.6.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/Libraries PDF/pdfbox-app-2.0.6.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/Libraries PDF/pdfbox-tools-2.0.6.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/Libraries PDF/PDFRenderer.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/Libraries PDF/pdf-renderer.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/Libraries PDF/preflight-2.0.6.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/Libraries PDF/preflight-app-2.0.6.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Workspace JAVA/PDF-Viewer-S.L-/Libraries PDF/xmpbox-2.0.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

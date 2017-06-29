@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -83,24 +85,25 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		//Buttons
 		open = new JButton();
 		open.setIcon( getSizeImage( new ImageIcon("Images-Icons\\add.png"), 30, 30 ));
+		open.setFocusable(false);
 		tbHerramientas.add(open);
 		
 		btnZoomOut = new JButton("");
 		btnZoomOut.setIcon( getSizeImage( new ImageIcon("Images-Icons\\001-zoom-out.png"), 30, 30 ) );
+		btnZoomOut.setFocusable(false);
 		tbHerramientas.add(btnZoomOut);
 		
 		btnZoomIn = new JButton("");
 		btnZoomIn.setIcon(getSizeImage( new ImageIcon("Images-Icons\\002-zoom-in.png"), 30, 30 ));
+		btnZoomIn.setFocusable(false);
 		tbHerramientas.add(btnZoomIn);
 		
 		backPage = new JButton("");
-		backPage.setIcon( getSizeImage( new ImageIcon("Images-Icons\\previous.png"), 30, 30 ) );
 		backPage.setVisible(false);
 		backPage.setFocusable(false);
 		getContentPane().add(backPage, BorderLayout.WEST);
 		
 		nextPage = new JButton("");
-		nextPage.setIcon( getSizeImage( new ImageIcon("Images-Icons\\next.png"), 30, 30 ));
 		nextPage.setVisible(false);
 		nextPage.setFocusable(false);
 		getContentPane().add(nextPage, BorderLayout.EAST);
@@ -163,20 +166,22 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 				{
 					try
 					{
-						File file = new File(
-							chooser.getSelectedFile().getAbsolutePath()); 
-						// UbicaciÃ³n del archivo pdf
+						File file = new File( chooser.getSelectedFile().getAbsolutePath() );		//get file PDF 
+						
 						RandomAccessFile raf = new RandomAccessFile(file, "r");
 						FileChannel channel = raf.getChannel();
 
-						lblTextDirectory.setText(chooser.getSelectedFile().getAbsolutePath());
+						lblTextDirectory.setText(chooser.getSelectedFile().getAbsolutePath());		//add directory in label text
 						
 						ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0,channel.size());
-						pdffile = new PDFFile(buf);
-						paginas = pdffile.getNumPages();
-						pagina = 1;
-						viewPage();
+						
+						pdffile = new PDFFile(buf);													//save file pdf in variable
+						paginas = pdffile.getNumPages();											//get number of pages the PDF file
+						pagina = 1;																	//
+						viewPage();																	//show file in panel
+						
 						raf.close();
+						
 						lblDirectory.setVisible(true);
 						cbDown.setVisible(true);
 						backPage.setVisible(true);
@@ -190,12 +195,35 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 			}
 		});
 		
-		cbDown.addActionListener(new ActionListener() {
-			
+		backPage.addMouseListener(new MouseAdapter() { 				//Add event to mouse.			
+            public void mouseEntered(MouseEvent evt) {				//mouse entered in button			            	
+            	backPage.setIcon( getSizeImage( new ImageIcon("Images-Icons\\previous.png"), 30, 30 ) );
+            	backPage.setVisible(true);							//button is visible
+            	backPage.setEnabled(true);							//enable button
+            }
+
+            public void mouseExited(MouseEvent evt) {				//mouse exited in button
+            	backPage.setIcon(null);								//disable image of button
+            	backPage.setEnabled(false);							//disable button 
+            }
+		});
+		
+		nextPage.addMouseListener(new MouseAdapter() { 				//Add event to mouse.			
+            public void mouseEntered(MouseEvent evt) {				//mouse entered in button			
+            	nextPage.setIcon( getSizeImage( new ImageIcon("Images-Icons\\next.png"), 30, 30 ));
+            	nextPage.setVisible(true);							//button is visible
+            	nextPage.setEnabled(true);							//enable button
+            }
+
+            public void mouseExited(MouseEvent evt) {				//mouse exited in button
+            	nextPage.setIcon(null);								//disable image of button
+            	nextPage.setEnabled(false);							//disable button 
+            }
+		});
+		
+		cbDown.addActionListener(new ActionListener() {				//Add options list a JComboBox
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
 				String ruta = lblTextDirectory.getText();
 				try {
 					PDFManager pdfManager = new PDFManager(ruta);
@@ -243,7 +271,7 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 				cbDown.getSelectedItem();
 			}
 		});
-		
+				
 		setVisible(true);
 	}
 
@@ -283,13 +311,12 @@ public class UI extends JFrame implements ActionListener {		//GUI the program PD
 		repaint();
 	}
 	
-	//edit size Image to button
-	public ImageIcon getSizeImage(ImageIcon icon, int w, int h){
-		//ImageIcon icon = new ImageIcon("miimagen.jpeg");
-		java.awt.Image img = icon.getImage(); //convertimos icon en una imagen
-		java.awt.Image otraimg = img.getScaledInstance(w,h,java.awt.Image.SCALE_SMOOTH); //creamos una imagen nueva dándole las dimensiones que queramos a la antigua
+	public ImageIcon getSizeImage(ImageIcon icon, int w, int h){							//edit size Image to button
+		java.awt.Image img = icon.getImage(); 												//parse icon in image
+		java.awt.Image otraimg = img.getScaledInstance(w,h,java.awt.Image.SCALE_SMOOTH); 	//create new image to size a like 
 		ImageIcon otroicon = new ImageIcon(otraimg);
-		//JButton botón = new JButton(otroicon);
-		return otroicon;
+		return otroicon;																	//return new image 
 	}
+	
+	
 }
